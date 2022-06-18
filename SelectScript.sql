@@ -8,3 +8,5 @@ CHANGE status estatus char(8); -- Esto sirve para cambiarle el nombre a una colu
 SELECT titulo as Encabezado, fecha_publicacion as Publicado_en, estatus as estado
 from post;
 
+SELECT count(*) as Numero_posts
+FROM post;
