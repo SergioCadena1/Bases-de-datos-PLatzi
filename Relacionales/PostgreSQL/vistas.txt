@@ -1,0 +1,13 @@
+-- Vistas
+
+SELECT *
+from viaje
+where date_part('hour', inicio) > 21;
+
+SELECT *
+from despues_noche_mview;
+
+REFRESH MATERIALIZED VIEW despues_noche_mview;
+
+delete from viaje
+where id_viaje = 63;

@@ -1,0 +1,25 @@
+-- FUNCIONES ESPECIALES
+
+-- ON CONFLICT DO 
+INSERT INTO public.estaciones(
+	id_estacion, nombre, direccion)
+	VALUES (1, 'Las americas', 'calle125')
+	on conflict(id_estacion) do 
+	update set nombre = 'Las americas', direccion ='calle125';
+
+-- RETURNING
+INSERT INTO public.estaciones(
+	nombre, direccion)
+	VALUES ('RET', 'URNIG')
+RETURNING *;
+
+-- LIKE Y ILIKE
+SELECT nombre 
+	FROM public."Pasajeros"
+	WHERE public."Pasajeros".nombre iLIKE 's%';
+	
+-- IS / IS NOT
+
+select *
+from trenes
+where modelo is not null;

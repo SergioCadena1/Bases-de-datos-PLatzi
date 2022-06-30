@@ -1,0 +1,13 @@
+-- Trigger para accionar una tabla que muestra un registro cuando se eliminen los datos.
+
+CREATE TRIGGER eliminandotrigger
+AFTER DELETE
+ON pasajeros
+FOR EACH ROW
+EXECUTE PROCEDURE importantepl();
+
+DELETE FROM public.pasajeros
+	WHERE id = 100;
+		
+select *
+from conteo_pasajeros;

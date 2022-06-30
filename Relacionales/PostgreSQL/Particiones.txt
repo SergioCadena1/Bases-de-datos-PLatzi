@@ -1,0 +1,9 @@
+INSERT INTO public.bitacora_viaje(
+	id_viaje, fecha)
+	VALUES (2,'2011-03-01');
+	
+create table bitacora_viaje201001 partition of bitacora_viaje
+for values from ('2010-01-01') to ('2019-01-31');
+
+select * 
+from public.bitacora_viaje

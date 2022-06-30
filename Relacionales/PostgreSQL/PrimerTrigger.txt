@@ -1,0 +1,35 @@
+-- FUNCTION: public.importantepl()
+
+DROP FUNCTION IF EXISTS public.importantepl();
+
+CREATE OR REPLACE FUNCTION public.importantepl()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+DECLARE
+ rec record;
+ contador integer := 0;
+BEGIN
+	for rec IN SELECT * FROM public."pasajeros" LOOP
+		contador := contador + 1;
+	end loop;
+	insert into public."conteo_pasajeros"(total,tiempo)
+	values (contador, now());	
+    RETURN NEW;
+END
+$BODY$;
+
+CREATE TRIGGER primertrigger
+AFTER INSERT
+ON pasajeros
+FOR EACH ROW
+EXECUTE PROCEDURE importantepl();
+
+insert into pasajeros (
+		nombre, direccion_residencia, fecha_nacimiento)
+		values 	('nombre trigger', 'Direccion prub','2000-01-01');
+		
+select *
+from conteo_pasajeros;

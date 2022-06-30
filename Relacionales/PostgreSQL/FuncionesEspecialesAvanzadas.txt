@@ -1,0 +1,41 @@
+-- FUNCIONES ESPECIALES AVANZADAS
+
+-- COALESCE
+select id, COALESCE(nombre,'N/A') as nombre, direccion_residencia, fecha_nacimiento 
+from public."Pasajeros"
+where nombre is null;
+
+-- NULLIF
+SELECT NULLIF(0,0);
+
+-- GREATEST
+SELECT GREATEST (1,5,8,42,69,52,85,15,9,65);
+
+-- LEAST
+SELECT LEAST (1,5,8,42,69,52,85,15,9,65);
+
+-- BLOQUES ANONIMOS
+
+SELECT id, COALESCE(nombre,'N/A') as nombre, direccion_residencia, fecha_nacimiento,
+	CASE
+		WHEN fecha_nacimiento > '2004-06-29' THEN
+		'MENOR DE EDAD'
+		ELSE
+		'MAYOR DE EDAD'
+	END as Mayoria_Edad,
+	CASE
+		WHEN nombre ILIKE 's%' THEN
+		'Empieza con S'
+		WHEN nombre ILIKE 'l%' THEN
+		'Empieza con L'
+		WHEN nombre ILIKE 'n%' THEN
+		'Empieza con N'
+		WHEN nombre ILIKE 'a%' THEN
+		'Empieza con N'
+		WHEN nombre ILIKE 'm%' THEN
+		'Empieza con M'
+		WHEN nombre ILIKE 'h%' THEN
+		'Empieza con H'
+		else 'N/A'
+	END AS Inicial_Nombre
+from public."Pasajeros";

@@ -1,0 +1,19 @@
+-- PL/SQL
+
+CREATE FUNCTION importantePL() 
+ returns void
+AS $$
+DECLARE
+ rec record;
+ contador integer := 0;
+BEGIN
+	for rec IN SELECT * FROM public."Pasajeros" LOOP
+		RAISE NOTICE 'Un pasajero se llama %' , rec.nombre;
+		contador := contador + 1;
+	end loop;
+	RAISE NOTICE 'Total de datos %' , contador;
+END
+$$
+LANGUAGE PLPGSQL;
+
+SELECT importantePL();
