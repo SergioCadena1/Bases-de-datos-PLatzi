@@ -1,0 +1,12 @@
+-- CREATE EXTENSION dblink;
+
+select * 
+from pasajeros
+join 
+dblink('dbname = remota 
+	   port=5432 
+	   host=127.0.0.1 
+	   user=usuario_consulta 
+	   password=1234',
+	  'SELECT * FROM vip') AS datos_remotos (id integer, fecha date)
+	  on (pasajeros.id = datos_remotos.id);
