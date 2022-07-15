@@ -1,0 +1,70 @@
+select *
+from platzi.alumnos as ou
+where (
+	select count(*)
+	from platzi.alumnos as inr
+	where ou.id = inr.id
+) > 1;
+
+-- Select a la tabla
+select(platzi.alumnos.nombre,
+	   platzi.alumnos.apellido,
+	   platzi.alumnos.email,
+	   platzi.alumnos.colegiatura,
+	   platzi.alumnos.fecha_incorporacion,
+	   platzi.alumnos.carrera_id,
+	   platzi.alumnos.tutor_id
+	  )::text, count(*)
+from platzi.alumnos
+group by platzi.alumnos.nombre,
+	   platzi.alumnos.apellido,
+	   platzi.alumnos.email,
+	   platzi.alumnos.colegiatura,
+	   platzi.alumnos.fecha_incorporacion,
+	   platzi.alumnos.carrera_id,
+	   platzi.alumnos.tutor_id
+having count(*) > 1;
+
+
+-- anoter
+
+select *
+from(
+	select id,
+	row_number() over(
+		partition by
+			nombre,
+			apellido,
+			email,
+			colegiatura,
+			fecha_incorporacion,
+			carrera_id,
+			tutor_id
+		order by id ASC
+	) AS row,
+	*
+	from platzi.alumnos
+)as duplicados
+where duplicados.row > 1;
+
+
+DELETE FROM platzi.alumnos
+where id IN(
+	select id
+		from (
+		select id,
+		row_number() over(
+			partition by
+				nombre,
+				apellido,
+				email,
+				colegiatura,
+				fecha_incorporacion,
+				carrera_id,
+				tutor_id
+			order by id ASC
+		) AS row
+		from platzi.alumnos
+	)as duplicados
+	where duplicados.row > 1);
+		

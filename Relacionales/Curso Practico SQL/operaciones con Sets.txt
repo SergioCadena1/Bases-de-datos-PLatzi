@@ -1,0 +1,33 @@
+-- select con arrays
+
+select *
+from (
+	select row_number() over() as row_id,*
+	from platzi.alumnos
+) as alumnos_with_row_num
+where row_id in (1,5,98,15,2,32,10,17);
+
+
+select *
+from platzi.alumnos
+where id IN (
+	select id 
+	from platzi.alumnos
+	where tutor_id = 30
+);
+
+select *
+from platzi.alumnos
+where id NOT IN (
+	select id 
+	from platzi.alumnos
+	where tutor_id = 30
+);
+
+select *
+from platzi.alumnos
+where id IN (
+	select id 
+	from platzi.alumnos
+	where tutor_id != 30
+);

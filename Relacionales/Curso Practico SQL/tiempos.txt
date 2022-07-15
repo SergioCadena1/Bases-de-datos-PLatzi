@@ -1,0 +1,63 @@
+-- select con tiempo
+
+select extract(MONTH from fecha_incorporacion) as anio_incor, count(*) as total_Incorporacion_anual
+from platzi.alumnos
+group by anio_incor
+order by anio_incor desc;
+
+select extract(HOUR from fecha_incorporacion) as minutos,
+	   extract(minute from fecha_incorporacion) as minutos,
+	   extract(SECOND from fecha_incorporacion) as minutos
+FROM platzi.alumnos;
+
+select date_part('year', fecha_incorporacion) as anio_incor
+from platzi.alumnos;
+
+select date_part('year', fecha_incorporacion) as anio_incor,
+       date_part('month', fecha_incorporacion) as mes_incor,
+	   date_part('day', fecha_incorporacion) as dia_incor
+from platzi.alumnos;
+
+select date_part('hour', fecha_incorporacion) as hora_incor,
+	   date_part('minute', fecha_incorporacion) as hora_incor,
+	   date_part('second', fecha_incorporacion) as hora_incor
+from platzi.alumnos;
+
+
+SELECT *
+FROM platzi.alumnos
+where extract(YEAR from fecha_incorporacion) = 2019 and extract(DOW from fecha_incorporacion) = 5;
+
+select extract(DOW from fecha_incorporacion) as dia_semana, COUNT(*) AS total_dia
+from platzi.alumnos
+group by dia_semana;
+
+SELECT *
+FROM platzi.alumnos
+WHERE DATE_PART ('YEAR', fecha_incorporacion) = 2019
+
+SELECT *
+FROM(
+	SELECT DATE_PART ('YEAR', fecha_incorporacion) AS anio_incorporacion,*
+	from platzi.alumnos
+)AS alumno_por_año
+where anio_incorporacion = 2020;
+
+SELECT *
+FROM platzi.alumnos
+WHERE DATE_PART ('YEAR', fecha_incorporacion) = 2018 and DATE_PART ('month', fecha_incorporacion) = 5;
+
+
+SELECT  COUNT(*) AS total,
+case
+	when extract(DOW from fecha_incorporacion) = 0 then 'domingo'
+	when extract(DOW from fecha_incorporacion) = 1 then 'lunes'
+	when extract(DOW from fecha_incorporacion) = 2 then 'martes'
+	when extract(DOW from fecha_incorporacion) = 3 then 'miercoles'
+	when extract(DOW from fecha_incorporacion) = 4 then 'jueves'
+	when extract(DOW from fecha_incorporacion) = 5 then 'viernes'
+	when extract(DOW from fecha_incorporacion) = 6 then 'sabado'
+end dia_semana
+from platzi.alumnos
+group by dia_semana
+order by total desc;

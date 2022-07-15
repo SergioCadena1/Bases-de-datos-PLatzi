@@ -1,0 +1,45 @@
+SELECT departamento, municipio,
+	CASE
+		WHEN municipio is not null THEN
+			count(*)
+	END as hurtos_municipio,
+	CASE
+		WHEN fecha between '2018-01-01' and '2018-01-05' THEN
+			count(*)
+	END as hurtos_departamento
+from public."hurtos"
+group by departamento,municipio,fecha
+order by departamento;
+
+SELECT departamento, count(*) as totalhurtos
+from public.hurtos
+where fecha between '2018-01-01' and '2018-01-05'
+group by departamento;
+
+
+select *
+from hurtos;
+create table departamentos_total as (
+SELECT departamento, count(departamento) as hurtos_departamento
+from public.hurtos
+GROUP by departamento
+order by departamento asc
+);
+
+drop table total_hurtos_primeros_dias
+
+create table total_hurtos_primeros_dias as (
+SELECT departamento, count(*) as totalhurtos
+from public.hurtos
+where fecha between '2018-01-01' and '2018-01-05'
+);
+
+select hurtos.departamento, hurtos.municipio, 
+	count(hurtos.municipio) as hurtos_municipio, departamentos_total.hurtos_departamento,
+	count(hurtos.fecha) as totalhurtos
+	from hurtos 
+	join departamentos_total on departamentos_total.departamento = hurtos.departamento
+	join 
+GROUP by hurtos.departamento, hurtos.municipio,departamentos_total.hurtos_departamento,hurtos.fecha
+order by departamento asc;
+

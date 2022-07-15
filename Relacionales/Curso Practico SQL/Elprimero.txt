@@ -1,0 +1,36 @@
+-- Para traer el primer registro de datos con fetch first
+select *
+from platzi.alumnos
+fetch first 1 rows only;
+
+--Trae el primer registro por Limit
+select *
+from platzi.alumnos
+limit 1;
+
+-- Window functions
+
+select *
+from (
+	select row_number() over() as row_id,*         --ROW_NUMBER trae el número de registro de la row
+	from platzi.alumnos
+)as Alumnos_con_numero_registro
+where row_id =5;
+
+
+-- Primeros 5 registros de la tabla 
+
+select *
+from platzi.alumnos
+fetch first 5 rows only;
+
+select *
+from platzi.alumnos
+limit 5;
+
+select * 
+from(
+	select row_number() over() as row_id,*
+	from platzi.alumnos
+) conteo_alumnos
+where row_id between 1 and 5;
