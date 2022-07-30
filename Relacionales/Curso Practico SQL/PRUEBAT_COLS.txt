@@ -1,0 +1,20 @@
+With Tabla_TOTAL AS(
+  -- Union de las dos primeras Tablas
+  SELECT *
+  FROM T_CLIENTE TC
+  JOIN T_CREDITO TCRE ON TC.id_persona = TCRE.id_persona
+  JOIN T_TIPO_CREDITO TCRED ON TCRE.Codigo_Linea_Credito = TCRED.Codigo_Linea_Credito 
+  WHERE TC.Segmento IN ('PREMIUM','VIP','SIGNATURE') AND TC.Edad BETWEEN 20 and 40
+),
+Agrupacion_CAT AS (
+  -- Selecciono los datos.
+  SELECT count(*) as Cantidad, sum(Valor_Credito) as Valor_Total, avg(Tasa_Credito) as Tasa_Promedio
+  FROM Tabla_TOTAL
+  WHERE Descrip_Linea_Credito <> 'Reestructurado'
+  GROUP BY Segmento
+  ORDER BY Valor_Total DESC
+)
+
+SELECT * 
+FROM Agrupacion_CAT;
+
