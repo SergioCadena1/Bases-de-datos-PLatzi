@@ -1,0 +1,23 @@
+SELECT departamento,
+	   municipio, 
+	   COUNT(cantidad) OVER(PARTITION BY municipio) as hurtos_municipio,
+	   COUNT(cantidad) OVER(PARTITION BY departamento) as hurtos_departamento
+FROM public.hurtos
+ORDER BY departamento;
+
+
+With Tabla_TOTAL AS(
+  SELECT COUNT(*) AS total
+  FROM public.hurtos
+  WHERE fecha BETWEEN '2018-01-01' AND '2018-01-05'
+),
+Filtro_departamento AS (
+	SELECT departamento,
+	       municipio, 
+	       COUNT(cantidad) OVER(PARTITION BY municipio) as hurtos_municipio,
+	       COUNT(cantidad) OVER(PARTITION BY departamento) as hurtos_departamento
+	FROM Tabla_TOTAL
+	ORDER BY departamento
+)
+
+select *

@@ -1,0 +1,24 @@
+-- MAXIMOS EN UNA TABLA
+
+SELECT fecha_incorporacion
+FROM platzi.alumnos
+ORDER BY fecha_incorporacion desc
+limit 1;
+
+-- Con agrupaciones 
+
+SELECT carrera_id, max(fecha_incorporacion)
+FROM platzi.alumnos
+GROUP BY carrera_id
+order by carrera_id;
+
+-- minimo nombre de la tabla 
+select nombre
+FROM platzi.alumnos
+order by nombre
+limit 1;
+
+select tutor_id, min(nombre)
+from platzi.alumnos
+group by tutor_id
+order by tutor_id;

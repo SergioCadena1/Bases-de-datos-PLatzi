@@ -1,0 +1,37 @@
+-- Super importante para la ciencia de datos
+-- PRINCIPALES WINDOW FUNCTIONS
+
+SELECT ROW_NUMBER() OVER() AS row_id, *
+FROM platzi.alumnos;
+
+SELECT ROW_NUMBER() OVER(ORDER BY fecha_incorporacion) AS row_id, *
+FROM platzi.alumnos;
+
+SELECT FIRST_VALUE(colegiatura) OVER() AS row_id, *
+FROM platzi.alumnos;
+
+SELECT FIRST_VALUE(colegiatura) OVER(PARTITION BY carrera_id) AS primera_colegiatura, *
+FROM platzi.alumnos;
+
+SELECT LAST_VALUE(colegiatura) OVER(PARTITION BY carrera_id) AS ultima_colegiatura, *
+FROM platzi.alumnos;
+
+SELECT NTH_VALUE(colegiatura,3) OVER(PARTITION BY carrera_id) AS ultima_colegiatura, *
+FROM platzi.alumnos;
+
+-- RANKINGS
+
+SELECT *,
+	   RANK() OVER(PARTITION BY carrera_id ORDER BY colegiatura DESC) as Ranking_colegiaturas
+FROM platzi.alumnos
+ORDER BY carrera_id, Ranking_colegiaturas;
+
+SELECT *,
+	   DENSE_RANK() OVER(PARTITION BY carrera_id ORDER BY colegiatura DESC) as Ranking_colegiaturas
+FROM platzi.alumnos
+ORDER BY carrera_id, Ranking_colegiaturas;
+
+SELECT *,
+	   PERCENT_RANK() OVER(PARTITION BY carrera_id ORDER BY colegiatura DESC) as Ranking_colegiaturas
+FROM platzi.alumnos
+ORDER BY carrera_id, Ranking_colegiaturas;

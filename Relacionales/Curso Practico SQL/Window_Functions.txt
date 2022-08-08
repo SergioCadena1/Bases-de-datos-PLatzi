@@ -1,0 +1,18 @@
+-- Super importante para la ciencia de datos
+SELECT *,
+	   AVG(colegiatura) OVER(PARTITION BY carrera_id),
+	   SUM(colegiatura) OVER(PARTITION BY apellido)
+FROM platzi.alumnos;
+
+SELECT *,
+	   SUM(colegiatura) OVER(PARTITION BY carrera_id ORDER BY colegiatura)
+FROM platzi.alumnos;
+
+SELECT *
+FROM(
+	SELECT *,
+	       RANK() OVER(PARTITION BY carrera_id ORDER BY colegiatura DESC) as brand_rank
+	FROM platzi.alumnos
+) AS rnaked_colegiaturas_carrera
+WHERE brand_rank < 3 	
+ORDER BY brand_rank;

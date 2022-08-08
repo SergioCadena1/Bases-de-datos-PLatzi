@@ -1,0 +1,20 @@
+-- SELFISH (HACER UN JOIN CON LA PROPIA TABLA)
+
+SELECT CONCAT(t.nombre,' ', t.apellido) AS tutor,
+	   count(a.nombre) AS alumnos_Tutor
+FROM platzi.alumnos AS a
+    INNER JOIN platzi.alumnos AS t ON a.tutor_id = t.id
+GROUP BY tutor
+ORDER BY alumnos_Tutor DESC
+LIMIT 10;
+
+
+-- PROMEDIO ALUMNOS POR TUTOR
+SELECT AVG(alumnos_Tutor)
+FROM(
+	SELECT CONCAT(t.nombre,' ', t.apellido) AS tutor,
+	   	   count(*) AS alumnos_Tutor
+	FROM platzi.alumnos AS a
+    INNER JOIN platzi.alumnos AS t ON a.tutor_id = t.id
+	GROUP BY tutor
+)total
